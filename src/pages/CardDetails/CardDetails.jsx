@@ -11,21 +11,18 @@ function CardDetails() {
     (state) => state.countryDetails.countryDetailsData[0]
   );
   const loding = useSelector((state) => state.countryDetails.lodingSatus);
-  console.log(data);
 
   useEffect(() => {
     dispatch(fetchCountryDetails(country));
   }, []);
 
-  if (loding) {
-    <Loding />;
-  }
+  if (loding) <Loding />;
 
   return (
     <div className="py-20 bg-[#F0F0F0] ">
-      <div className="max-w-[900px] p-5 mx-auto shadow-xl rounded-2xl bg-slate-100">
+      <div className="max-w-[900px] p-5 mx-5 sm:mx-auto shadow-xl rounded-2xl bg-slate-100">
         <Link to={"/"}>
-          <button className="px-4 py-2 bg-red-400 text-white rounded-xl ">
+          <button className="px-4 py-2 mb-4 bg-red-400 text-white rounded-xl active:scale-95 duration-300 ease-in-out">
             back
           </button>
         </Link>
@@ -48,7 +45,7 @@ function CardDetails() {
           <h1 className="font-semibold text-xl">
             Borders : {data?.borders?.map((item) => `${item}`).join(" ,  ")}
           </h1>
-          <div className=" columns-2">
+          <div className=" columns-1 sm:columns-2 mx-auto sm:mx-0">
             <ul className="flex flex-col gap-3">
               <li>continents : {data?.continents}</li>
               <li>Area : {data?.area}</li>
@@ -69,7 +66,7 @@ function CardDetails() {
             google Map :{" "}
             <a href={data?.maps?.googleMaps} target="_blank">
               {" "}
-              <button className="px-4 py-2 bg-green-600 text-white rounded-xl">
+              <button className="px-4 py-2 bg-green-600 text-white rounded-xl active:scale-95 duration-300 ease-in-out">
                 click me
               </button>
             </a>

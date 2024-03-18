@@ -25,7 +25,7 @@ const countryDetailsSlice = createSlice({
                 state.lodingSatus = false
             })
             .addCase(fetchCountryDetails.pending, (state, action) => {
-
+                state.countryDetailsData = []
                 state.lodingSatus = true
             })
     }

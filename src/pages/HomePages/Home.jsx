@@ -12,12 +12,11 @@ function Home() {
   );
 
   const loding = useSelector((state) => state.countryData.lodingStatus);
-  console.log(loding);
 
   const filterDataValue = useSelector(
     (state) => state.countryData.filterDataStore
   );
-  console.log(filterDataValue);
+
   const dispatch = useDispatch();
 
   const searchElement = useRef();
@@ -36,6 +35,9 @@ function Home() {
 
   const handelOnClickRegions = (event) => {
     console.log(event.target.value);
+    if (event.target.value === "All") {
+      dispatch(fetchCountryGuide());
+    }
     const filterQuery = event.target.value;
     const filteredData = originalData.filter((item) =>
       item?.continents?.includes(filterQuery)
@@ -49,35 +51,34 @@ function Home() {
 
   const cardData = filterDataValue.length ? filterDataValue : originalData;
   if (loding) {
-    <Loding />;
+    return (
+      <div className="flex justify-center h-[80vh] items-center">
+        <Loding />;
+      </div>
+    );
   }
   return (
-    <div>
+    <div className="bg-gray-100">
       <div>
-        <div className="border border-green-900 mb-10 flex flex-col sm:flex-row justify-between gap-5 px-10 py-5">
-          <div className="flex gap-4 items-center">
+        <div className=" mb-10 flex flex-col sm:flex-row justify-between gap-5 px-10 py-5">
+          <div className="flex  items-center">
             <input
               type="text"
-              className="outline-none border border-black rounded-xl py-2 px-4 font-bold"
+              className="outline-none shadow-xl rounded-xl py-3 px-4 font-bold "
               placeholder="Search By Country Name.."
               ref={searchElement}
               onChange={handelOnChangeCard}
             />
-            {/* <button
-              className="px-4 py-2 rounded-xl bg-green-500 text-white font-bold"
-              onClick={handleOnClickSearch}
-            >
-              Search
-            </button> */}
           </div>
 
           {/* Filter by reason */}
           <div>
             <select
-              className="px-5 border border-black py-2 rounded-md outline-none font-medium "
+              className="px-5 shadow-xl py-3 rounded-md outline-none font-medium "
               onChange={handelOnClickRegions}
             >
               <option hidden>Filter By Reason</option>
+              <option value="All">All country</option>
               <option value="Asia">Asia</option>
               <option value="Antarctica">Antarctica</option>
               <option value="Europe">Europe</option>
@@ -91,7 +92,7 @@ function Home() {
 
         {/* Display country cards */}
 
-        <div className="flex flex-wrap gap-5 justify-evenly">
+        <div className="flex flex-wrap gap-5 justify-evenly max-w-[1200px] mx-auto">
           {cardData.map((item) => (
             <Link to={`/cardDetail/${item.name.official}`} key={nanoid()}>
               <div
